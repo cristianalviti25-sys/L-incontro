@@ -22,7 +22,7 @@
    contact    compila per attivare i pulsanti di contatto. */
 window.SYD = {
   video: { src: 'media/sogno.mp4', loop: 'media/sogno-loop.mp4', poster: 'media/sogno.jpg' },
-  scroll: { frames: 0, bg: '#08070f', dir: 'frames/hero', zoom: 1.6 },
+  scroll: { frames: 145, bg: '#00000a', dir: 'frames/hero', zoom: 1.6 },
   contact: { whatsapp: '', email: '', instagram: '' } // whatsapp con prefisso, es. '393331234567'
 };
 </script>
@@ -188,11 +188,13 @@ html:not(.motion) .intro { display: none; }
 
 /* scena a scorrimento */
 .scrub { position: relative; height: var(--len, 520vh); background: var(--stage-bg, var(--ink)); }
-.scrub::before, .scrub::after { content: ""; position: absolute; left: 0; right: 0; height: 24vh; z-index: 2; pointer-events: none; }
-.scrub::before { top: 0; background: linear-gradient(var(--ink), rgba(8,7,15,0)); }
-.scrub::after { bottom: 0; background: linear-gradient(rgba(8,7,15,0), var(--ink)); }
+/* raccordo col resto della pagina: sfumature dentro lo stage, sotto ai testi, accese solo all'inizio e alla fine */
+.scrub .stage::before, .scrub .stage::after { content: ""; position: absolute; left: 0; right: 0; height: 24vh; z-index: 1; pointer-events: none; }
+.scrub .stage::before { top: 0; background: linear-gradient(var(--ink), rgba(8,7,15,0)); opacity: var(--et, 1); }
+.scrub .stage::after { bottom: 0; background: linear-gradient(rgba(8,7,15,0), var(--ink)); opacity: var(--eb, 0); }
 .scrub .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .scrub canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scrub .copy, .scrub__hud { z-index: 3; }
 .scrub .copy { position: absolute; left: 50%; bottom: 7vh; width: min(92vw, 1040px); text-align: center; opacity: 0; pointer-events: none; will-change: opacity, transform; transform: translate(var(--tx, -50%), var(--ty, 0px)); display: grid; gap: .9rem; justify-items: center; }
 .scrub .copy.left { --tx: 0px; left: max(var(--gutter), env(safe-area-inset-left, 0px)); bottom: auto; top: 30vh; width: min(88vw, 370px); text-align: left; justify-items: start; }
 .scrub .copy h2 { font-size: clamp(1.7rem, 3.5vw, 3.3rem); }
@@ -1101,6 +1103,8 @@ $$('#silk, #silk2').forEach(c => Silk(c));
   resize(); resizers.push(resize);
 
   /* --- fotogrammi --- */
+  const hex = /^#([0-9a-f]{6})$/i.exec(cfg.bg), n = hex ? parseInt(hex[1], 16) : 0x08070f;
+  const bg0 = `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, 0)`;
   const nearest = idx => { if (imgs[idx]) return imgs[idx]; for (let d = 1; d < imgs.length; d++) { if (imgs[idx - d]) return imgs[idx - d]; if (imgs[idx + d]) return imgs[idx + d]; } return null; };
   function drawFrame(idx, p) {
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
@@ -1111,7 +1115,11 @@ $$('#silk, #silk2').forEach(c => Silk(c));
     const s = land ? Math.max(W / img.naturalWidth, H / img.naturalHeight) : Math.min(W / img.naturalWidth, H / img.naturalHeight) * (cfg.zoom || 1.15);
     const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
     const mid = land ? easeIO(seg(p, .18, .3)) * (1 - easeIO(seg(p, .72, .86))) : 0;
-    ctx.drawImage(img, (W - dw) / 2 + W * .11 * mid, (H - dh) / 2 - H * (land ? .05 : .08), dw, dh);
+    const y0 = (H - dh) / 2 - H * .05;
+    ctx.drawImage(img, (W - dw) / 2 + W * .14 * mid, y0, dw, dh);
+    // la seta che cade esce nel buio: sfumatura sul bordo basso del fotogramma, niente taglio netto
+    const fy = y0 + dh * .8, g = ctx.createLinearGradient(0, fy, 0, y0 + dh * .97);
+    g.addColorStop(0, bg0); g.addColorStop(1, cfg.bg); ctx.fillStyle = g; ctx.fillRect(0, fy, W, H - fy + 1);
   }
 
   /* --- scena in codice: il sogno (particelle) diventa cartamodello, poi sito --- */
@@ -1234,7 +1242,7 @@ $$('#silk, #silk2').forEach(c => Silk(c));
       if (idx !== cur || needs || Math.abs(p - lastP) > .0004) { cur = idx; needs = false; lastP = p; drawFrame(idx, p); }
     } else drawCode(p, reduce ? 3 : t);
     const n = Math.round(p * 100);
-    if (n !== pct) { pct = n; hudPct.textContent = String(n).padStart(3, '0'); }
+    if (n !== pct) { pct = n; hudPct.textContent = String(n).padStart(3, '0'); sec.style.setProperty('--et', (1 - seg(p, 0, .05)).toFixed(2)); sec.style.setProperty('--eb', seg(p, .95, 1).toFixed(2)); }
     copies.forEach(c => {
       const fade = Math.min(.06, (c.b - c.a) / 3); let o = 0;
       if (p >= c.a && p <= c.b) o = Math.min(c.a <= 0 ? 1 : (p - c.a) / fade, c.b >= 1 ? 1 : (c.b - p) / fade, 1);
