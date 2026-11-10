@@ -12,14 +12,17 @@
 
 <script>
 /* ================= CONFIGURAZIONE: si modifica solo qui =================
-   heroVideo  video in loop (muto) dietro al titolo. Vuoto = seta animata in WebGL.
+   video      il video "Il sogno prende stile". src parte una volta quando la sezione
+              entra nello schermo, poi gira loop (la coda del video, avanti e indietro).
+              src vuoto = la sezione non compare.
    scroll     video a scorrimento: fotogrammi creati con tools/frames.sh.
               frames: 0 = scena animata in codice. Dopo frames.sh: metti il numero
               di fotogrammi e il colore "sfondo=" che lo script stampa.
+              zoom = ingrandimento del soggetto sugli schermi verticali.
    contact    compila per attivare i pulsanti di contatto. */
 window.SYD = {
-  heroVideo: '',                                   // es. 'media/hero.mp4'
-  scroll: { frames: 0, bg: '#08070f', dir: 'frames/hero' },
+  video: { src: 'media/sogno.mp4', loop: 'media/sogno-loop.mp4', poster: 'media/sogno.jpg' },
+  scroll: { frames: 0, bg: '#08070f', dir: 'frames/hero', zoom: 1.6 },
   contact: { whatsapp: '', email: '', instagram: '' } // whatsapp con prefisso, es. '393331234567'
 };
 </script>
@@ -146,11 +149,8 @@ html:not(.motion) .intro { display: none; }
 
 /* hero */
 .hero { position: relative; min-height: 100vh; min-height: 100svh; overflow: clip; isolation: isolate; }
-.hero__silk, .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+.hero__silk { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
 .hero__silk.flat, .finale__silk.flat { background: radial-gradient(90% 80% at 80% 30%, rgba(255,79,154,.55), transparent 60%), radial-gradient(70% 70% at 60% 80%, rgba(255,174,92,.4), transparent 60%), radial-gradient(90% 90% at 20% 20%, rgba(141,107,255,.4), transparent 65%), var(--ink); }
-.hero__video { object-fit: cover; opacity: 0; transition: opacity 1.2s; z-index: -2; }
-.hero.has-video .hero__video { opacity: 1; }
-.hero.has-video .hero__silk { opacity: 0; }
 .hero__veil { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(8,7,15,.82) 0%, rgba(8,7,15,.42) 46%, rgba(8,7,15,0) 78%), linear-gradient(0deg, var(--ink) 0%, rgba(8,7,15,0) 34%), linear-gradient(180deg, rgba(8,7,15,.6) 0%, rgba(8,7,15,0) 22%); }
 .hero__in { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(1.4rem, 3.6vh, 3rem); padding-block: 6.5rem clamp(3.2rem, 8vh, 5rem); will-change: transform, opacity; }
 .hero__title { font: 800 var(--fs-hero)/.86 var(--f-display); letter-spacing: -.05em; text-transform: uppercase; }
@@ -188,6 +188,9 @@ html:not(.motion) .intro { display: none; }
 
 /* scena a scorrimento */
 .scrub { position: relative; height: var(--len, 520vh); background: var(--stage-bg, var(--ink)); }
+.scrub::before, .scrub::after { content: ""; position: absolute; left: 0; right: 0; height: 24vh; z-index: 2; pointer-events: none; }
+.scrub::before { top: 0; background: linear-gradient(var(--ink), rgba(8,7,15,0)); }
+.scrub::after { bottom: 0; background: linear-gradient(rgba(8,7,15,0), var(--ink)); }
 .scrub .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .scrub canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .scrub .copy { position: absolute; left: 50%; bottom: 7vh; width: min(92vw, 1040px); text-align: center; opacity: 0; pointer-events: none; will-change: opacity, transform; transform: translate(var(--tx, -50%), var(--ty, 0px)); display: grid; gap: .9rem; justify-items: center; }
@@ -223,6 +226,16 @@ html:not(.motion) .intro { display: none; }
 .marquee__row--out .marquee__track { color: transparent; -webkit-text-stroke: 1px rgba(244,237,228,.55); }
 .marquee__row--serif .marquee__track { font-family: var(--f-serif); font-style: italic; font-weight: 500; text-transform: none; letter-spacing: -.02em; }
 .marquee__row--serif .marquee__track span { background: var(--silk); -webkit-background-clip: text; background-clip: text; color: transparent; padding-block: .08em; }
+
+/* video */
+.reel { padding-top: clamp(3rem, 8vw, 7rem); overflow: clip; }
+.reel__frame { --s: 1; --r: 0px; position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 100vh; max-height: 100svh; overflow: hidden; background: #10001a; border-radius: var(--r); transform: scale(var(--s)); will-change: transform; }
+.reel__v { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 76% 50%; }
+.reel__v--loop { opacity: 0; } .reel__v--loop.on { opacity: 1; }
+.reel__shade { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8,7,15,.82) 0%, rgba(8,7,15,0) 46%); }
+.reel__copy { position: absolute; left: 0; right: 0; bottom: clamp(1.4rem, 5vw, 4.5rem); display: grid; gap: 1rem; }
+.reel__copy h2 { font-size: clamp(2rem, 5.4vw, 5rem); }
+@media (max-width: 760px) { .reel__frame { aspect-ratio: 4 / 5; } }
 
 /* servizi */
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(.9rem, 1.6vw, 1.5rem); perspective: 1400px; }
@@ -536,6 +549,19 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
     <span>Pensato per il telefono</span><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><span>Veloce</span><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><span>Pronto per Google</span><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>
   </div></div>
 </div>
+
+<!-- ============ VIDEO ============ -->
+<section class="reel" id="video" hidden aria-label="Il sogno prende stile">
+  <div class="reel__frame" id="reelFrame">
+    <video class="reel__v" id="reelIntro" muted playsinline preload="metadata" aria-hidden="true"></video>
+    <video class="reel__v reel__v--loop" id="reelLoop" muted playsinline loop preload="none" aria-hidden="true"></video>
+    <div class="reel__shade" aria-hidden="true"></div>
+    <div class="wrap reel__copy">
+      <p class="label">Dal sogno allo schermo</p>
+      <h2>Il sogno <em>prende stile.</em></h2>
+    </div>
+  </div>
+</section>
 
 <!-- ============ SERVIZI ============ -->
 <section class="sec" id="servizi">
@@ -893,14 +919,40 @@ float H(vec2 p){
   float folds = sin(s.y * 2.7 + w2 * 6.2 + t * 2.2) * .5 + .5;
   return mix(folds, w2, .4);
 }
+uniform vec4 uP[24]; uniform vec2 uQ[24];
+vec2 gD; float gB;
+void stroke(vec2 uv){
+  vec2 d = vec2(0.); float b = 0.;
+  for (int i = 0; i < 24; i++){
+    float a = uQ[i].x; if (a > 2.4) continue;
+    vec2 r = uv - uP[i].xy; float rr = dot(r, r);
+    float g = exp(-rr / .045);
+    float env = smoothstep(0., .16, a) * exp(-a * 2.) * cos(a * 3.);
+    vec2 v = uP[i].zw;
+    d += v * (g * env);
+    b += dot(v, r) * g * env;
+    float pr = uQ[i].y;
+    if (pr > 0.) {
+      float q = sqrt(rr), k = exp(-a * 2.4);
+      b += pr * (sin(24. * (q - a * .42)) * exp(-rr / .07) * k * smoothstep(0., .12, a) * .1 - exp(-rr / .012) * exp(-a * 3.) * .24);
+      d += r * (exp(-rr / .03) * pr * exp(-a * 3.) * 26.);
+    }
+  }
+  gD = d; gB = b;
+}
+float S(vec2 uv){
+  stroke(uv);
+  vec2 d = gD * .05; d /= (1. + length(d) * 2.2);
+  float b = gB * 1.5; b /= (1. + abs(b) * 1.3);
+  return H(uv * 1.5 + vec2(0., uS * .35) + (uM - .5) * .18 - d) + b;
+}
 void main(){
   vec2 uv = (gl_FragCoord.xy - .5 * uR) / min(uR.x, uR.y);
-  vec2 p = uv * 1.5 + vec2(0., uS * .35) + (uM - .5) * .18;
-  float e = .006;
-  float h = H(p); vec2 w = warp;
-  float hx = H(p + vec2(e, 0.)), hy = H(p + vec2(0., e));
-  vec3 n = normalize(vec3((h - hx) / e * .22, (h - hy) / e * .22, 1.));
-  vec3 l = normalize(vec3(.35 + (uM.x - .5) * .9, .55 + (uM.y - .5) * .9, .75));
+  float e = .004;
+  float hx = S(uv + vec2(e, 0.)), hy = S(uv + vec2(0., e));
+  float h = S(uv); vec2 w = warp;
+  vec3 n = normalize(vec3((h - hx) / e * .147, (h - hy) / e * .147, 1.));
+  vec3 l = normalize(vec3(.35 + (uM.x - .5) * .3, .55 + (uM.y - .5) * .3, .75));
   float diff = clamp(dot(n, l), 0., 1.);
   float spec = pow(clamp(dot(reflect(-l, n), vec3(0., 0., 1.)), 0., 1.), 18.);
   vec3 plum = vec3(.22, .10, .50), rose = vec3(1., .31, .60), amber = vec3(1., .68, .36), ink = vec3(.031, .027, .059);
@@ -922,7 +974,29 @@ void main(){
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const U = n => gl.getUniformLocation(prog, n);
-  const uR = U('uR'), uT = U('uT'), uM = U('uM'), uS = U('uS');
+  const uR = U('uR'), uT = U('uT'), uM = U('uM'), uS = U('uS'), uP = U('uP'), uQ = U('uQ');
+  // carezza: gli ultimi 24 punti toccati, con direzione e velocità del gesto
+  const N = 24, pts = new Float32Array(N * 4), meta = new Float32Array(N * 2), born = new Float64Array(N).fill(-1e6), pres = new Float32Array(N);
+  let head = 0, sx = null, sy = 0, sAt = 0, ax = 0, ay = 0, emitAt = 0;
+  const emit = (cx, cy, vx, vy, pr, now) => {
+    const r = canvas.getBoundingClientRect();
+    if (cx < r.left || cx > r.right || cy < r.top || cy > r.bottom) return;
+    const m = Math.min(r.width, r.height) || 1, i = head; head = (head + 1) % N;
+    pts[i * 4] = ((cx - r.left) / r.width - .5) * r.width / m; pts[i * 4 + 1] = (.5 - (cy - r.top) / r.height) * r.height / m;
+    const sp = Math.hypot(vx, vy) / m, k = sp > 2.6 ? 2.6 / sp : 1;
+    pts[i * 4 + 2] = vx / m * k; pts[i * 4 + 3] = -vy / m * k; born[i] = now; pres[i] = pr;
+  };
+  const strokeTo = (cx, cy) => {
+    if (!visible || reduce) return;
+    const now = performance.now() / 1000;
+    if (sx !== null && now - sAt < .3) { ax += cx - sx; ay += cy - sy; } else { ax = ay = 0; emitAt = now; }
+    sx = cx; sy = cy; sAt = now;
+  };
+  const pressAt = (cx, cy) => { if (visible && !reduce) emit(cx, cy, 0, 0, 1, performance.now() / 1000); };
+  addEventListener('pointermove', e => { if (e.pointerType !== 'touch') strokeTo(e.clientX, e.clientY); }, { passive: true });
+  addEventListener('pointerdown', e => { if (e.pointerType !== 'touch') pressAt(e.clientX, e.clientY); }, { passive: true });
+  addEventListener('touchstart', e => { const t = e.touches[0]; if (!t) return; sx = null; strokeTo(t.clientX, t.clientY); pressAt(t.clientX, t.clientY); }, { passive: true });
+  addEventListener('touchmove', e => { const t = e.touches[0]; if (t) strokeTo(t.clientX, t.clientY); }, { passive: true });
   let scale = vw < 800 ? .55 : .62, visible = false, drawn = false, slow = 0, last = 0;
   const m = { x: .5, y: .5 };
   const resize = () => {
@@ -939,6 +1013,10 @@ void main(){
     if (dt > .045 && dt < .5) { if (++slow > 40 && scale > .3) { scale *= .75; slow = 0; resize(); } } else slow = Math.max(0, slow - 1);
     const r = canvas.getBoundingClientRect();
     m.x = lerp(m.x, clamp((pointer.x - r.left) / r.width), .04); m.y = lerp(m.y, 1 - clamp((pointer.y - r.top) / r.height), .04);
+    const now = performance.now() / 1000;
+    if ((ax || ay) && now - emitAt >= .09) { const dt = now - emitAt; emit(sx, sy, ax / dt, ay / dt, 0, now); ax = ay = 0; emitAt = now; }
+    for (let i = 0; i < N; i++) { meta[i * 2] = now - born[i]; meta[i * 2 + 1] = pres[i]; }
+    gl.uniform4fv(uP, pts); gl.uniform2fv(uQ, meta);
     gl.uniform2f(uR, canvas.width, canvas.height); gl.uniform1f(uT, reduce ? 12 : t); gl.uniform2f(uM, m.x, m.y); gl.uniform1f(uS, -r.top / Math.max(1, vh));
     gl.drawArrays(gl.TRIANGLES, 0, 3); drawn = true;
   });
@@ -946,15 +1024,34 @@ void main(){
 }
 $$('#silk, #silk2').forEach(c => Silk(c));
 
-/* ---------- video hero (facoltativo) ---------- */
-if (SYD.heroVideo) {
-  const hero = $('#hero'), v = document.createElement('video');
-  v.className = 'hero__video'; v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = 'auto';
-  v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
-  v.addEventListener('playing', () => hero.classList.add('has-video'), { once: true });
-  v.src = SYD.heroVideo; hero.insertBefore(v, hero.firstChild);
-  const p = v.play(); if (p && p.catch) p.catch(() => {});
-}
+/* ---------- video "Il sogno prende stile": parte quando entra nello schermo, poi resta vivo in loop ---------- */
+(() => {
+  const V = SYD.video || {}, sec = $('#video'); if (!sec || !V.src) return;
+  sec.hidden = false;
+  const frame = $('#reelFrame'), a = $('#reelIntro'), b = $('#reelLoop');
+  const play = v => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+  let started = false, looping = false, inView = false;
+  if (reduce) { // niente riproduzione automatica: resta il fotogramma finale
+    b.src = V.loop || V.src; b.preload = 'auto'; b.classList.add('on');
+    if (!V.loop) b.addEventListener('loadedmetadata', () => { b.currentTime = Math.max(0, b.duration - .05); }, { once: true });
+    return;
+  }
+  if (V.poster) a.poster = V.poster;
+  a.src = V.src;
+  if (V.loop) { b.src = V.loop; a.addEventListener('ended', () => { looping = true; b.classList.add('on'); if (inView) play(b); }); } else a.loop = true;
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => {
+    inView = es[0].isIntersecting;
+    if (!inView) { a.pause(); b.pause(); return; }
+    if (!started) { started = true; if (V.loop) { b.preload = 'auto'; b.load(); } }
+    play(looping ? b : a);
+  }, { threshold: .4 }).observe(sec);
+  tasks.push(() => { // la cornice cresce fino a tutto schermo mentre arriva al centro
+    const r = sec.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > vh) return;
+    const k = easeOut(clamp((vh - r.top) / (vh * .8)));
+    frame.style.setProperty('--s', lerp(.8, 1, k).toFixed(4)); frame.style.setProperty('--r', lerp(44, 0, k).toFixed(1) + 'px');
+  });
+})();
 
 /* ---------- hero: parallasse ---------- */
 (() => {
@@ -972,11 +1069,11 @@ if (SYD.heroVideo) {
 (() => {
   const sec = $('#scena'); if (!sec) return;
   const canvas = $('canvas', sec), ctx = canvas.getContext('2d');
-  const cfg = Object.assign({ frames: 0, bg: INK, dir: 'frames/hero' }, SYD.scroll || {});
+  const cfg = Object.assign({ frames: 0, bg: INK, dir: 'frames/hero', zoom: 1.6 }, SYD.scroll || {});
   const hudPct = $('#scenaPct'), hudLoad = $('#scenaLoad'), hudIdle = hudLoad.textContent;
   const copies = $$('.copy', sec).map(el => ({ el, a: +el.dataset.in, b: +el.dataset.out }));
   sec.style.setProperty('--stage-bg', cfg.bg);
-  let W = 0, H = 0, dpr = 1, mode = cfg.frames > 0 ? 'frames' : 'code', cur = -1, needs = true, pct = -1;
+  let W = 0, H = 0, dpr = 1, mode = cfg.frames > 0 ? 'frames' : 'code', cur = -1, needs = true, pct = -1, lastP = -1;
   const imgs = new Array(Math.max(0, cfg.frames | 0));
 
   if (mode === 'frames') {
@@ -1005,13 +1102,16 @@ if (SYD.heroVideo) {
 
   /* --- fotogrammi --- */
   const nearest = idx => { if (imgs[idx]) return imgs[idx]; for (let d = 1; d < imgs.length; d++) { if (imgs[idx - d]) return imgs[idx - d]; if (imgs[idx + d]) return imgs[idx + d]; } return null; };
-  function drawFrame(idx) {
+  function drawFrame(idx, p) {
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = cfg.bg; ctx.fillRect(0, 0, W, H);
     const img = nearest(idx); if (!img) return;
-    const s = W / H < 1 ? Math.min(W / img.naturalWidth, H / img.naturalHeight) * 1.15 : Math.max(W / img.naturalWidth, H / img.naturalHeight);
+    const land = W / H >= 1;
+    // orizzontale: riempie lo schermo e si sposta a destra mentre il testo è a sinistra. verticale: soggetto ingrandito, un po' più in alto
+    const s = land ? Math.max(W / img.naturalWidth, H / img.naturalHeight) : Math.min(W / img.naturalWidth, H / img.naturalHeight) * (cfg.zoom || 1.15);
     const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
-    ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    const mid = land ? easeIO(seg(p, .18, .3)) * (1 - easeIO(seg(p, .72, .86))) : 0;
+    ctx.drawImage(img, (W - dw) / 2 + W * .11 * mid, (H - dh) / 2 - H * (land ? .05 : .08), dw, dh);
   }
 
   /* --- scena in codice: il sogno (particelle) diventa cartamodello, poi sito --- */
@@ -1131,7 +1231,7 @@ if (SYD.heroVideo) {
     const p = clamp(-r.top / Math.max(1, r.height - vh));
     if (mode === 'frames') {
       const idx = Math.round(p * (imgs.length - 1));
-      if (idx !== cur || needs) { cur = idx; needs = false; drawFrame(idx); }
+      if (idx !== cur || needs || Math.abs(p - lastP) > .0004) { cur = idx; needs = false; lastP = p; drawFrame(idx, p); }
     } else drawCode(p, reduce ? 3 : t);
     const n = Math.round(p * 100);
     if (n !== pct) { pct = n; hudPct.textContent = String(n).padStart(3, '0'); }
