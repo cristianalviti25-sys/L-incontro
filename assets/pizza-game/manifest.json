@@ -1,0 +1,710 @@
+{
+  "design": {
+    "width": 1920,
+    "height": 1080
+  },
+  "sprites": {
+    "chef": {
+      "idle": {
+        "file": "chef/idle.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "blink": {
+        "file": "chef/blink.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_a": {
+        "file": "chef/walk_a.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_b": {
+        "file": "chef/walk_b.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "knead": {
+        "file": "chef/knead.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "sprinkle": {
+        "file": "chef/sprinkle.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "arms_up": {
+        "file": "chef/arms_up.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "place": {
+        "file": "chef/place.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "peel_carry": {
+        "file": "chef/peel_carry.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "peel_push": {
+        "file": "chef/peel_push.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "wait_worried": {
+        "file": "chef/wait_worried.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "shocked": {
+        "file": "chef/shocked.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "celebrate": {
+        "file": "chef/celebrate.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "proud_pizza": {
+        "file": "chef/proud_pizza.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "thumbs_up": {
+        "file": "chef/thumbs_up.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "sad": {
+        "file": "chef/sad.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "burnt_pizza": {
+        "file": "chef/burnt_pizza.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "wave": {
+        "file": "chef/wave.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "point_left": {
+        "file": "chef/point_left.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "watch_oven": {
+        "file": "chef/watch_oven.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "arms_crossed": {
+        "file": "chef/arms_crossed.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_1": {
+        "file": "chef/walk_1.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_2": {
+        "file": "chef/walk_2.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_3": {
+        "file": "chef/walk_3.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_4": {
+        "file": "chef/walk_4.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_5": {
+        "file": "chef/walk_5.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_6": {
+        "file": "chef/walk_6.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_7": {
+        "file": "chef/walk_7.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      },
+      "walk_8": {
+        "file": "chef/walk_8.png",
+        "w": 657,
+        "h": 686,
+        "anchor": [
+          256,
+          678
+        ]
+      }
+    },
+    "ingredients": {
+      "dough_tray": {
+        "file": "ingredients/dough_tray.png",
+        "w": 420,
+        "h": 270
+      },
+      "bowl_sauce": {
+        "file": "ingredients/bowl_sauce.png",
+        "w": 398,
+        "h": 420
+      },
+      "bowl_mozzarella": {
+        "file": "ingredients/bowl_mozzarella.png",
+        "w": 420,
+        "h": 368
+      },
+      "bowl_basil": {
+        "file": "ingredients/bowl_basil.png",
+        "w": 420,
+        "h": 386
+      },
+      "bowl_mushrooms": {
+        "file": "ingredients/bowl_mushrooms.png",
+        "w": 420,
+        "h": 386
+      },
+      "bowl_salami": {
+        "file": "ingredients/bowl_salami.png",
+        "w": 420,
+        "h": 381
+      },
+      "bowl_olives": {
+        "file": "ingredients/bowl_olives.png",
+        "w": 420,
+        "h": 393
+      },
+      "bowl_ham": {
+        "file": "ingredients/bowl_ham.png",
+        "w": 420,
+        "h": 388
+      },
+      "bowl_peppers": {
+        "file": "ingredients/bowl_peppers.png",
+        "w": 420,
+        "h": 385
+      }
+    },
+    "pizza": {
+      "base_raw": {
+        "file": "pizza/base_raw.png",
+        "w": 576,
+        "h": 433,
+        "anchor": [
+          288,
+          216
+        ]
+      },
+      "base_sauce": {
+        "file": "pizza/base_sauce.png",
+        "w": 576,
+        "h": 433,
+        "anchor": [
+          288,
+          216
+        ]
+      },
+      "base_sauce_mozzarella": {
+        "file": "pizza/base_sauce_mozzarella.png",
+        "w": 576,
+        "h": 433,
+        "anchor": [
+          288,
+          216
+        ]
+      },
+      "cooked": {
+        "file": "pizza/cooked.png",
+        "w": 576,
+        "h": 433,
+        "anchor": [
+          288,
+          216
+        ]
+      },
+      "overcooked": {
+        "file": "pizza/overcooked.png",
+        "w": 576,
+        "h": 433,
+        "anchor": [
+          288,
+          216
+        ]
+      },
+      "burnt": {
+        "file": "pizza/burnt.png",
+        "w": 576,
+        "h": 433,
+        "anchor": [
+          288,
+          216
+        ]
+      },
+      "margherita": {
+        "file": "pizza/margherita.png",
+        "w": 576,
+        "h": 433,
+        "anchor": [
+          288,
+          216
+        ]
+      },
+      "dough_ball": {
+        "file": "pizza/dough_ball.png",
+        "w": 507,
+        "h": 383
+      },
+      "peel": {
+        "file": "pizza/peel.png",
+        "w": 577,
+        "h": 526
+      }
+    },
+    "toppings": {
+      "basil_leaf": {
+        "file": "toppings/basil_leaf.png",
+        "w": 172,
+        "h": 163
+      },
+      "basil_leaves": {
+        "file": "toppings/basil_leaves.png",
+        "w": 195,
+        "h": 163
+      },
+      "mushroom_a": {
+        "file": "toppings/mushroom_a.png",
+        "w": 205,
+        "h": 172
+      },
+      "mushroom_b": {
+        "file": "toppings/mushroom_b.png",
+        "w": 183,
+        "h": 180
+      },
+      "salami": {
+        "file": "toppings/salami.png",
+        "w": 205,
+        "h": 193
+      },
+      "salami_crisp": {
+        "file": "toppings/salami_crisp.png",
+        "w": 195,
+        "h": 167
+      },
+      "olive": {
+        "file": "toppings/olive.png",
+        "w": 161,
+        "h": 151
+      },
+      "ham": {
+        "file": "toppings/ham.png",
+        "w": 221,
+        "h": 178
+      },
+      "pepper_red": {
+        "file": "toppings/pepper_red.png",
+        "w": 209,
+        "h": 156
+      },
+      "pepper_yellow": {
+        "file": "toppings/pepper_yellow.png",
+        "w": 195,
+        "h": 150
+      },
+      "mozzarella_raw": {
+        "file": "toppings/mozzarella_raw.png",
+        "w": 208,
+        "h": 180
+      },
+      "mozzarella_melted": {
+        "file": "toppings/mozzarella_melted.png",
+        "w": 229,
+        "h": 159
+      }
+    },
+    "fx": {
+      "smoke_puff": {
+        "file": "fx/smoke_puff.png",
+        "w": 172,
+        "h": 208
+      },
+      "smoke_burnt": {
+        "file": "fx/smoke_burnt.png",
+        "w": 266,
+        "h": 281
+      },
+      "steam": {
+        "file": "fx/steam.png",
+        "w": 195,
+        "h": 216
+      },
+      "flour_puff": {
+        "file": "fx/flour_puff.png",
+        "w": 241,
+        "h": 225
+      },
+      "sparkle_big": {
+        "file": "fx/sparkle_big.png",
+        "w": 235,
+        "h": 247
+      },
+      "sparkles": {
+        "file": "fx/sparkles.png",
+        "w": 202,
+        "h": 210
+      },
+      "heart": {
+        "file": "fx/heart.png",
+        "w": 221,
+        "h": 192
+      },
+      "sweat_drop": {
+        "file": "fx/sweat_drop.png",
+        "w": 135,
+        "h": 191
+      }
+    },
+    "ui": {
+      "panel_wood": {
+        "file": "ui/panel_wood.png",
+        "w": 520,
+        "h": 313
+      },
+      "ticket_paper": {
+        "file": "ui/ticket_paper.png",
+        "w": 380,
+        "h": 492
+      },
+      "btn_play": {
+        "file": "ui/btn_play.png",
+        "w": 452,
+        "h": 503
+      },
+      "btn_replay": {
+        "file": "ui/btn_replay.png",
+        "w": 440,
+        "h": 508
+      },
+      "btn_pause": {
+        "file": "ui/btn_pause.png",
+        "w": 415,
+        "h": 520
+      },
+      "btn_sound": {
+        "file": "ui/btn_sound.png",
+        "w": 414,
+        "h": 520
+      },
+      "star_full": {
+        "file": "ui/star_full.png",
+        "w": 443,
+        "h": 418
+      },
+      "star_empty": {
+        "file": "ui/star_empty.png",
+        "w": 442,
+        "h": 418
+      },
+      "bar_frame": {
+        "file": "ui/bar_frame.png",
+        "w": 520,
+        "h": 180
+      },
+      "bar_marker": {
+        "file": "ui/bar_marker.png",
+        "w": 304,
+        "h": 260
+      },
+      "timer": {
+        "file": "ui/timer.png",
+        "w": 450,
+        "h": 520
+      },
+      "hand_pointer": {
+        "file": "ui/hand_pointer.png",
+        "w": 420,
+        "h": 454
+      }
+    }
+  },
+  "animations": {
+    "chef_walk": {
+      "frames": [
+        "chef/walk_1.png",
+        "chef/walk_2.png",
+        "chef/walk_3.png",
+        "chef/walk_4.png",
+        "chef/walk_5.png",
+        "chef/walk_6.png",
+        "chef/walk_7.png",
+        "chef/walk_8.png"
+      ],
+      "fps": 12,
+      "loop": true,
+      "note": "cammina verso sinistra; specchiare per andare a destra"
+    },
+    "chef_idle": {
+      "frames": [
+        "chef/idle.png",
+        "chef/blink.png"
+      ],
+      "fps": 0,
+      "note": "idle + battito di ciglia occasionale (~120 ms)"
+    },
+    "fire": {
+      "file": "fx/fire_strip.png",
+      "frames": 8,
+      "frameW": 368,
+      "frameH": 524,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        184,
+        524
+      ]
+    },
+    "fire_alt": {
+      "file": "fx/fire_alt_strip.png",
+      "frames": 12,
+      "frameW": 273,
+      "frameH": 349,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        136,
+        349
+      ]
+    }
+  },
+  "scene": {
+    "landscape": {
+      "background": "backgrounds/kitchen.webp",
+      "counter": "backgrounds/kitchen_counter.webp",
+      "width": 1920,
+      "height": 1080,
+      "counterTopY": 766,
+      "layout": {
+        "fire": {
+          "x": 308,
+          "y": 494,
+          "scale": 0.42
+        },
+        "ovenMouth": {
+          "x": 190,
+          "y": 300,
+          "w": 330,
+          "h": 240
+        },
+        "ovenPizza": {
+          "x": 372,
+          "y": 516,
+          "scale": 0.3,
+          "squashY": 0.7
+        },
+        "chef": {
+          "x": 960,
+          "baselineY": 930,
+          "scale": 1.08,
+          "minX": 620,
+          "maxX": 1560,
+          "oven": {
+            "x": 712,
+            "baselineY": 772,
+            "scale": 1.0
+          }
+        },
+        "peelBlade": {
+          "peel_carry": [
+            205,
+            -217
+          ],
+          "peel_push": [
+            300,
+            -215
+          ]
+        },
+        "pizza": {
+          "x": 966,
+          "y": 893,
+          "scale": 0.68,
+          "squashY": 0.74,
+          "toppingScale": 0.3
+        },
+        "bowls": [
+          {
+            "sprite": "bowl_sauce",
+            "x": 130,
+            "y": 896,
+            "scale": 0.46
+          },
+          {
+            "sprite": "bowl_mozzarella",
+            "x": 340,
+            "y": 905,
+            "scale": 0.46
+          },
+          {
+            "sprite": "bowl_basil",
+            "x": 548,
+            "y": 905,
+            "scale": 0.46
+          },
+          {
+            "sprite": "bowl_mushrooms",
+            "x": 1372,
+            "y": 905,
+            "scale": 0.46
+          },
+          {
+            "sprite": "bowl_salami",
+            "x": 1580,
+            "y": 905,
+            "scale": 0.46
+          },
+          {
+            "sprite": "bowl_olives",
+            "x": 1790,
+            "y": 905,
+            "scale": 0.46
+          }
+        ]
+      }
+    },
+    "portrait": {
+      "background": "backgrounds/kitchen_portrait.webp",
+      "counter": "backgrounds/kitchen_portrait_counter.webp",
+      "width": 1440,
+      "height": 1920,
+      "counterTopY": 1431
+    }
+  }
+}
