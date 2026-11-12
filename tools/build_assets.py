@@ -118,8 +118,11 @@ def feet_center(crop):
     return (xs.max() + xs.min()) / 2
 
 
-def chef_sheet(src, cols, rows, names, align="feet"):
-    """Ritaglia un foglio del pizzaiolo conservando la linea di terra di ogni riga."""
+def chef_sheet(src, cols, rows, names, refs, align="feet"):
+    """Ritaglia un foglio del pizzaiolo conservando la linea di terra di ogni riga.
+
+    refs: pose in piedi e dritte, usate per portare ogni riga alla stessa statura.
+    """
     img = load(src).convert("RGBA")
     cells = slice_sheet(img, cols, rows)
     out = []
@@ -128,25 +131,30 @@ def chef_sheet(src, cols, rows, names, align="feet"):
         for c in range(cols):
             box = cells[(c, r)]
             crop = img.crop(box)
-            hat_w, hat_cx = hat_metrics(crop)
+            name = names[r * cols + c]
             out.append({
-                "name": names[r * cols + c], "crop": crop, "hat_w": hat_w,
-                "ax": hat_cx if align == "hat" else feet_center(crop),
-                "lift": baseline - box[3]})
+                "name": name, "crop": crop, "row": r,
+                "ax": hat_metrics(crop)[1] if align == "hat" else feet_center(crop),
+                "lift": baseline - box[3],
+                "stature": (box[3] - box[1]) + (baseline - box[3]) if name in refs else None})
     return out
 
 
 def build_chef(sheets):
     groups = [chef_sheet(*s) for s in sheets]
-    ref = float(np.median([s["hat_w"] for s in groups[0]]))
+    # statura di riferimento: idle/blink del primo foglio
+    target = float(np.median([s["stature"] for s in groups[0] if s["row"] == 0 and s["stature"]]))
     sprites = []
     for g in groups:
-        k = ref / float(np.median([s["hat_w"] for s in g]))  # stessa scala su tutti i fogli
-        for s in g:
-            c = s["crop"]
-            if abs(k - 1) > 0.01:
-                c = c.resize((round(c.width * k), round(c.height * k)), Image.LANCZOS)
-            sprites.append({"name": s["name"], "img": c, "ax": s["ax"] * k, "lift": s["lift"] * k})
+        sheet_k = target / float(np.median([s["stature"] for s in g if s["stature"]]))
+        for row in sorted({s["row"] for s in g}):
+            ref = [s["stature"] for s in g if s["row"] == row and s["stature"]]
+            k = target / float(np.median(ref)) if ref else sheet_k  # stessa statura in ogni riga
+            for s in (x for x in g if x["row"] == row):
+                c = s["crop"]
+                if abs(k - 1) > 0.004:
+                    c = c.resize((round(c.width * k), round(c.height * k)), Image.LANCZOS)
+                sprites.append({"name": s["name"], "img": c, "ax": s["ax"] * k, "lift": s["lift"] * k})
     p = 8
     left = max(s["ax"] for s in sprites)
     right = max(s["img"].width - s["ax"] for s in sprites)
@@ -324,12 +332,15 @@ def main():
         ("chef_core.png", 4, 3, [
             "idle", "blink", "walk_a", "walk_b",
             "knead", "sprinkle", "arms_up", "place",
-            "peel_carry", "peel_push", "wait_worried", "shocked"]),
+            "peel_carry", "peel_push", "wait_worried", "shocked"],
+         {"idle", "blink", "sprinkle", "place", "wait_worried", "shocked"}),
         ("chef_emotes.png", 3, 3, [
             "celebrate", "proud_pizza", "thumbs_up",
             "sad", "burnt_pizza", "wave",
-            "point_left", "watch_oven", "arms_crossed"]),
-        ("chef_walk.png", 4, 2, [f"walk_{i}" for i in range(1, 9)], "hat"),
+            "point_left", "watch_oven", "arms_crossed"],
+         {"thumbs_up", "burnt_pizza", "wave", "point_left", "arms_crossed"}),
+        ("chef_walk.png", 4, 2, [f"walk_{i}" for i in range(1, 9)],
+         {f"walk_{i}" for i in range(1, 9)}, "hat"),
     ])
     simple_sheet("ingredient_bowls.png", "ingredients", 3, 3, [
         "dough_tray", "bowl_sauce", "bowl_mozzarella",

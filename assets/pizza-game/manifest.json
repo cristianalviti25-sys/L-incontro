@@ -7,263 +7,263 @@
     "chef": {
       "idle": {
         "file": "chef/idle.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "blink": {
         "file": "chef/blink.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_a": {
         "file": "chef/walk_a.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_b": {
         "file": "chef/walk_b.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "knead": {
         "file": "chef/knead.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "sprinkle": {
         "file": "chef/sprinkle.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "arms_up": {
         "file": "chef/arms_up.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "place": {
         "file": "chef/place.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "peel_carry": {
         "file": "chef/peel_carry.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "peel_push": {
         "file": "chef/peel_push.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "wait_worried": {
         "file": "chef/wait_worried.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "shocked": {
         "file": "chef/shocked.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "celebrate": {
         "file": "chef/celebrate.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "proud_pizza": {
         "file": "chef/proud_pizza.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "thumbs_up": {
         "file": "chef/thumbs_up.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "sad": {
         "file": "chef/sad.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "burnt_pizza": {
         "file": "chef/burnt_pizza.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "wave": {
         "file": "chef/wave.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "point_left": {
         "file": "chef/point_left.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "watch_oven": {
         "file": "chef/watch_oven.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "arms_crossed": {
         "file": "chef/arms_crossed.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_1": {
         "file": "chef/walk_1.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_2": {
         "file": "chef/walk_2.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_3": {
         "file": "chef/walk_3.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_4": {
         "file": "chef/walk_4.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_5": {
         "file": "chef/walk_5.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_6": {
         "file": "chef/walk_6.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_7": {
         "file": "chef/walk_7.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       },
       "walk_8": {
         "file": "chef/walk_8.png",
-        "w": 657,
-        "h": 686,
+        "w": 648,
+        "h": 643,
         "anchor": [
-          256,
-          678
+          247,
+          635
         ]
       }
     },

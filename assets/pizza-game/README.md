@@ -18,7 +18,7 @@ pizzaiolo che si muove dietro al bancone, forno a legna con fuoco visibile a sin
 | Cartella | Cosa contiene |
 | --- | --- |
 | `backgrounds/` | Cucina orizzontale 1920×1080 (`kitchen.webp`) e verticale 1440×1920 (`kitchen_portrait.webp`). Per ognuna c'è il livello `*_counter.webp`: solo il bancone, trasparente sopra, da disegnare **sopra** il pizzaiolo. Il forno è senza fiamme: il fuoco è un'animazione a parte. |
-| `chef/` | 21 pose + ciclo di camminata a 8 frame (`walk_1`…`walk_8`). Tutte sulla stessa tela 657×686 con ancora ai piedi, quindi si scambiano senza scatti. |
+| `chef/` | 21 pose + ciclo di camminata a 8 frame (`walk_1`…`walk_8`). Tutte sulla stessa tela 648×643, alla stessa statura e con ancora ai piedi, quindi si scambiano senza scatti. |
 | `ingredients/` | Vassoio di panetti e 8 ciotole: pomodoro, mozzarella, basilico, funghi, salame piccante, olive, prosciutto cotto, peperoni. |
 | `pizza/` | Panetto, base cruda, con pomodoro, con mozzarella, cotta, troppo cotta, bruciata, margherita finita, pala. Gli stati hanno la stessa dimensione e si sovrappongono esattamente. |
 | `toppings/` | 12 pezzi singoli da spargere sulla pizza. |

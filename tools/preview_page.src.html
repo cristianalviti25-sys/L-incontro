@@ -1,0 +1,411 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Kit Grafico Pizzaiolo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: il palco di gioco 16:9 in alto, sotto il catalogo come tavola di sprite su scacchiera di trasparenza. */
+:root {
+  --bg: #ebe8ee;          /* marmo del piano di lavoro */
+  --surface: #f8f7fa;
+  --ink: #2b2530;
+  --muted: #6a6272;
+  --line: #d3cedb;
+  --basil: #2c7a37;
+  --basil-ink: #ffffff;
+  --tomato: #c93a26;
+  --check-a: #dedae4;
+  --check-b: #cdc8d6;
+  --stage-edge: #3b2a22;
+  --font-display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b2123; --surface: #242c2f; --ink: #edefe8; --muted: #9ba6a4; --line: #37433f;
+    --basil: #74c878; --basil-ink: #10210f; --tomato: #ff7a5c;
+    --check-a: #2a3336; --check-b: #333e41; --stage-edge: #0f1314; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b2123; --surface: #242c2f; --ink: #edefe8; --muted: #9ba6a4; --line: #37433f;
+  --basil: #74c878; --basil-ink: #10210f; --tomato: #ff7a5c;
+  --check-a: #2a3336; --check-b: #333e41; --stage-edge: #0f1314; color-scheme: dark;
+}
+
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.5;
+}
+.page {
+  max-width: 1180px; margin: 0 auto; padding-block: 28px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 40px;
+}
+h1, h2 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(30px, 5vw, 46px); }
+h2 { font-size: 26px; }
+p { margin: 0; }
+.intro { display: flex; flex-direction: column; gap: 10px; }
+.intro p { max-width: 65ch; color: var(--muted); }
+
+/* palco */
+.stage-block { display: flex; flex-direction: column; gap: 12px; }
+.stage {
+  border: 4px solid var(--stage-edge); border-radius: 6px; overflow: hidden;
+  background: var(--stage-edge); aspect-ratio: 16 / 9; max-width: 100%;
+}
+.stage canvas { display: block; width: 100%; height: 100%; }
+.stage-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.step {
+  font-family: var(--font-display); font-weight: 500; font-size: 20px;
+  flex: 1 1 220px; min-width: 0;
+}
+.step small { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-left: 8px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button {
+  font: 500 14px var(--font-body); color: var(--ink); background: var(--surface);
+  border: 1.5px solid var(--line); border-radius: 4px; padding: 8px 14px; cursor: pointer;
+}
+button:hover { border-color: var(--muted); }
+button:focus-visible { outline: 3px solid var(--basil); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--basil); border-color: var(--basil); color: var(--basil-ink); }
+.seg { display: flex; }
+.seg button { border-radius: 0; margin-left: -1.5px; }
+.seg button:first-child { border-radius: 4px 0 0 4px; margin-left: 0; }
+.seg button:last-child { border-radius: 0 4px 4px 0; }
+.seg-label { font-size: 13px; color: var(--muted); }
+
+/* catalogo */
+.group { display: flex; flex-direction: column; gap: 14px; }
+.group-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.group-head p { color: var(--muted); font-size: 14px; min-width: 0; }
+.count { font-family: var(--font-mono); font-size: 12px; color: var(--tomato); letter-spacing: .04em; }
+.grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(var(--tile, 132px), 1fr)); }
+.tile { margin: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.tile .pic {
+  aspect-ratio: var(--ratio, 1); display: grid; place-items: center; padding: 8px;
+  background-color: var(--check-a);
+  background-image: conic-gradient(var(--check-b) 25%, transparent 0 50%, var(--check-b) 0 75%, transparent 0);
+  background-size: 16px 16px; border-radius: 3px;
+}
+.tile img, .tile canvas { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; min-height: 0; }
+.tile .pic.flat { padding: 0; background: none; }
+.tile .pic.flat img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; }
+.tile figcaption { font-family: var(--font-mono); font-size: 11.5px; line-height: 1.35; overflow-wrap: anywhere; }
+.tile figcaption span { color: var(--muted); display: block; }
+.notes { border-top: 1.5px solid var(--line); padding-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+.notes p { max-width: 70ch; color: var(--muted); font-size: 14px; }
+.notes code { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); }
+</style>
+
+<main class="page">
+  <header class="intro">
+    <h1>Kit Grafico Pizzaiolo</h1>
+    <p>Tutte le grafiche del minigioco, generate con Higgsfield in un unico stile: cartoon morbido, leggermente pixellato. Qui sotto la scena è montata con gli sprite veri e gira in sequenza automatica; più in basso trovi ogni elemento ritagliato su sfondo trasparente.</p>
+  </header>
+
+  <section class="stage-block" aria-label="Scena di prova">
+    <div class="stage"><canvas id="stage" width="1920" height="1080" role="img" aria-label="Anteprima animata: il pizzaiolo prepara la pizza al bancone e la cuoce nel forno a legna a sinistra"></canvas></div>
+    <div class="stage-bar">
+      <div class="step" id="step" aria-live="off">Caricamento…</div>
+      <div class="controls">
+        <button id="btn-play" type="button" aria-pressed="false">Pausa</button>
+        <span class="seg-label" id="lbl-finale">Finale</span>
+        <div class="seg" role="group" aria-labelledby="lbl-finale">
+          <button id="end-alt" type="button" aria-pressed="true">Alterna</button>
+          <button id="end-ok" type="button" aria-pressed="false">Perfetta</button>
+          <button id="end-burnt" type="button" aria-pressed="false">Bruciata</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="catalog" style="display:contents"></div>
+
+  <footer class="notes">
+    <p>Scena di progetto 1920×1080 px. Il bancone è un livello separato, così il pizzaiolo ci passa dietro. Il fuoco è una strip di 8 frame a 10 fps, la camminata è un ciclo di 8 frame a 12 fps (si specchia per andare a destra).</p>
+    <p>Nel repository: sprite PNG in <code>assets/pizza-game/</code>, posizioni e animazioni in <code>manifest.json</code>, fogli originali in <code>source/</code>.</p>
+  </footer>
+</main>
+
+<script>
+const M = /*MANIFEST*/null;
+const EXT = "webp";
+const src = f => f.replace(/\.png$/, "." + EXT);
+const L = M.scene.landscape, LAY = L.layout;
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- catalogo ---------- */
+const GROUPS = [
+  ["chef", "Pizzaiolo", "Pose su tela identica, ancorate ai piedi: si scambiano senza scatti.", 150, `${M.sprites.chef.idle.w} / ${M.sprites.chef.idle.h}`],
+  ["ingredients", "Ingredienti sul bancone", "Ciotole e panetti, stessa inquadratura dall’alto.", 132, "1"],
+  ["pizza", "Pizza: dall’impasto alla cottura", "Stati allineati alla stessa dimensione, più la pala.", 150, "4 / 3"],
+  ["toppings", "Condimenti singoli", "Da spargere sulla pizza a piacere.", 96, "1"],
+  ["fx", "Effetti", "Fumo, vapore, farina, scintille.", 96, "1"],
+  ["ui", "Interfaccia", "Pulsanti, stelle, timer e barra di cottura, senza testi.", 120, "1"],
+];
+const cat = document.getElementById("catalog");
+function tile(file, name, w, h, flat) {
+  const fig = document.createElement("figure"); fig.className = "tile";
+  const pic = document.createElement("div"); pic.className = "pic" + (flat ? " flat" : "");
+  const im = new Image(); im.loading = "lazy"; im.alt = name; im.src = src(file); im.width = w; im.height = h;
+  pic.append(im);
+  const cap = document.createElement("figcaption");
+  cap.innerHTML = `${name}<span>${w}×${h}</span>`;
+  fig.append(pic, cap); return fig;
+}
+function group(title, note, count) {
+  const s = document.createElement("section"); s.className = "group";
+  s.innerHTML = `<div class="group-head"><h2>${title}</h2><span class="count">${count}</span><p>${note}</p></div><div class="grid"></div>`;
+  cat.append(s); return s.querySelector(".grid");
+}
+for (const [key, title, note, size, ratio] of GROUPS) {
+  const items = Object.entries(M.sprites[key]);
+  const g = group(title, note, items.length + " sprite");
+  g.style.setProperty("--tile", size + "px"); g.style.setProperty("--ratio", ratio);
+  for (const [name, s] of items) g.append(tile(s.file, name, s.w, s.h));
+}
+{
+  const g = group("Animazioni", "Fuoco in due versioni e camminata del pizzaiolo.", "3 animazioni");
+  g.style.setProperty("--tile", "150px");
+  for (const key of ["fire", "fire_alt"]) {
+    const a = M.animations[key];
+    const fig = document.createElement("figure"); fig.className = "tile";
+    const pic = document.createElement("div"); pic.className = "pic";
+    const c = document.createElement("canvas"); c.width = a.frameW; c.height = a.frameH; c.dataset.anim = key;
+    pic.append(c);
+    const cap = document.createElement("figcaption");
+    cap.innerHTML = `${key}<span>${a.frames} frame · ${a.fps} fps · ${a.frameW}×${a.frameH}</span>`;
+    fig.append(pic, cap); g.append(fig);
+  }
+  const w = M.animations.chef_walk, fig = document.createElement("figure"); fig.className = "tile";
+  const pic = document.createElement("div"); pic.className = "pic";
+  const c = document.createElement("canvas"); c.width = M.sprites.chef.idle.w; c.height = M.sprites.chef.idle.h; c.id = "walk-demo";
+  pic.append(c);
+  const cap = document.createElement("figcaption");
+  cap.innerHTML = `chef_walk<span>${w.frames.length} frame · ${w.fps} fps · si specchia</span>`;
+  fig.append(pic, cap); g.append(fig);
+}
+{
+  const g = group("Sfondi", "Orizzontale per desktop, verticale per telefono, più l’immagine guida.", "3 immagini");
+  g.style.setProperty("--tile", "240px"); g.style.setProperty("--ratio", "4 / 3");
+  g.append(tile(L.background, "kitchen", 1920, 1080, true));
+  g.append(tile(M.scene.portrait.background, "kitchen_portrait", 1440, 1920, true));
+  g.append(tile("concept/keyart.webp", "keyart", 1920, 1086, true));
+}
+
+/* ---------- palco ---------- */
+const cv = document.getElementById("stage"), ctx = cv.getContext("2d");
+const stepEl = document.getElementById("step");
+const img = {};
+function load(file) {
+  return new Promise(res => { const i = new Image(); i.onload = () => { img[file] = i; res(); }; i.onerror = () => res(); i.src = src(file); });
+}
+const chefPoses = ["idle", "blink", "knead", "place", "sprinkle", "peel_carry", "peel_push", "watch_oven",
+  "wait_worried", "shocked", "proud_pizza", "celebrate", "burnt_pizza", "sad", "thumbs_up"];
+const need = [L.background, L.counter, M.animations.fire.file, M.animations.fire_alt.file,
+  ...chefPoses.map(p => `chef/${p}.png`), ...M.animations.chef_walk.frames,
+  ...["dough_ball", "base_raw", "base_sauce", "base_sauce_mozzarella", "margherita", "overcooked", "burnt"].map(p => `pizza/${p}.png`),
+  ...LAY.bowls.map(b => `ingredients/${b.sprite}.png`),
+  "toppings/basil_leaf.png", "toppings/basil_leaves.png",
+  "fx/flour_puff.png", "fx/sparkle_big.png", "fx/sparkles.png", "fx/smoke_burnt.png", "fx/smoke_puff.png", "fx/steam.png",
+  "ui/bar_frame.png", "ui/bar_marker.png", "ui/star_full.png", "ui/star_empty.png"];
+
+const CA = M.sprites.chef.idle.anchor, CW = M.sprites.chef.idle.w, CH = M.sprites.chef.idle.h;
+const HOME = { x: LAY.chef.x, y: LAY.chef.baselineY, s: LAY.chef.scale };
+const OVEN = { x: 712, y: 772, s: 1.0 };
+const BLADE = { peel_carry: [205, -217], peel_push: [300, -215] };  // centro pala rispetto ai piedi
+const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+const lerp = (a, b, t) => a + (b - a) * t;
+const clamp01 = t => Math.max(0, Math.min(1, t));
+const pop = t => 1 + .18 * Math.sin(clamp01(t) * Math.PI);
+
+function spr(file, x, y, s = 1, o = {}) {
+  const i = img[file]; if (!i) return;
+  const w = i.width * s, h = i.height * s * (o.sy ?? 1);
+  ctx.save(); ctx.translate(x, y); if (o.rot) ctx.rotate(o.rot);
+  ctx.scale(o.flip ? -1 : 1, 1); ctx.globalAlpha = o.alpha ?? 1;
+  ctx.drawImage(i, -w * (o.ax ?? .5), -h * (o.ay ?? .5), w, h); ctx.restore();
+}
+function chef(pose, x, y, s, o = {}) {
+  spr(pose.includes("/") ? pose : `chef/${pose}.png`, x, y, s, { ax: CA[0] / CW, ay: CA[1] / CH, ...o });
+}
+function strip(key, frame, x, y, s, alpha = 1) {
+  const a = M.animations[key], i = img[a.file]; if (!i) return;
+  const w = a.frameW * s, h = a.frameH * s;
+  ctx.save(); ctx.globalAlpha = alpha;
+  ctx.drawImage(i, (frame % a.frames) * a.frameW, 0, a.frameW, a.frameH, x - w / 2, y - h, w, h); ctx.restore();
+}
+function pizzaAt(file, x, y, s, o = {}) { spr(`pizza/${file}.png`, x, y, s, { sy: LAY.pizza.squashY, ...o }); }
+
+const STEPS = [
+  ["idle", 1.1, "Pronto al bancone"], ["knead", 1.4, "Stende l’impasto"], ["sauce", 1.0, "Pomodoro"],
+  ["mozz", 1.0, "Mozzarella"], ["basil", 1.2, "Basilico"], ["pick", .5, "Prende la pala"],
+  ["toOven", 1.5, "Va al forno a legna"], ["push", .7, "Inforna"], ["cook", 3.4, "Cottura: occhio a non bruciarla"],
+  ["pull", .7, "Sforna"], ["back", 1.5, "Torna al bancone"], ["result", 2.8, ""],
+];
+let mode = "alt", burnt = false, playing = !reduceMotion, clock = 0, last = 0, stepIdx = 0, stepT = 0;
+const dur = i => STEPS[i][0] === "cook" && burnt ? 5.2 : STEPS[i][1];
+
+function advance(dt) {
+  clock += dt; stepT += dt;
+  while (stepT >= dur(stepIdx)) {
+    stepT -= dur(stepIdx); stepIdx++;
+    if (stepIdx >= STEPS.length) { stepIdx = 0; burnt = mode === "alt" ? !burnt : mode === "burnt"; }
+  }
+}
+
+function draw() {
+  const [id, , label] = STEPS[stepIdx], p = clamp01(stepT / dur(stepIdx)), t = clock;
+  ctx.clearRect(0, 0, 1920, 1080);
+  ctx.imageSmoothingQuality = "high";
+  spr(L.background, 0, 0, 1, { ax: 0, ay: 0 });
+
+  // fuoco + bagliore
+  const cooking = id === "cook" || id === "push" || id === "pull";
+  const heat = id === "cook" ? (burnt ? lerp(1, 1.35, p) : 1.08) : 1;
+  const mo = LAY.ovenMouth;
+  ctx.save(); ctx.globalCompositeOperation = "lighter";
+  const gl = ctx.createRadialGradient(LAY.fire.x, LAY.fire.y - 60, 10, LAY.fire.x, LAY.fire.y - 60, 300 * heat);
+  const ga = .30 + .06 * Math.sin(t * 9) + .04 * Math.sin(t * 23);
+  gl.addColorStop(0, `rgba(255,170,60,${ga})`); gl.addColorStop(1, "rgba(255,120,20,0)");
+  ctx.fillStyle = gl; ctx.fillRect(mo.x - 140, mo.y - 140, mo.w + 300, mo.h + 300); ctx.restore();
+  strip("fire", Math.floor(t * M.animations.fire.fps), LAY.fire.x, LAY.fire.y, LAY.fire.scale * heat);
+
+  // pizza nel forno
+  const op = LAY.ovenPizza;
+  if (id === "cook") {
+    const seq = burnt
+      ? [["base_sauce_mozzarella", 0], ["margherita", .28], ["overcooked", .58], ["burnt", .82]]
+      : [["base_sauce_mozzarella", 0], ["margherita", .55]];
+    let k = 0; while (k + 1 < seq.length && p >= seq[k + 1][1]) k++;
+    pizzaAt(seq[k][0], op.x, op.y, op.scale, { sy: op.squashY });
+    if (k + 1 < seq.length) pizzaAt(seq[k + 1][0], op.x, op.y, op.scale, { sy: op.squashY, alpha: clamp01((p - (seq[k + 1][1] - .16)) / .16) });
+    if (k === 0 && seq.length) spr("toppings/basil_leaves.png", op.x, op.y - 4, .12, { alpha: 1 - clamp01((p - seq[1][1] + .16) / .16) });
+  }
+
+  // pizzaiolo
+  const bob = Math.sin(t * 2.4) * .012;
+  let cx = HOME.x, cy = HOME.y, cs = HOME.s, pose = "idle", flip = false, sy = 1 + bob, carried = null;
+  const cookedName = burnt ? "burnt" : "margherita";
+  if (id === "idle") pose = (p > .55 && p < .66) ? "blink" : "idle";
+  else if (id === "knead") { pose = "knead"; sy = 1 + .03 * Math.sin(t * 14); }
+  else if (id === "sauce") pose = "place";
+  else if (id === "mozz" || id === "basil") { pose = "sprinkle"; sy = 1 + .015 * Math.sin(t * 16); }
+  else if (id === "pick") { pose = "peel_carry"; flip = true; carried = p > .45 ? "base_sauce_mozzarella" : null; }
+  else if (id === "toOven" || id === "back") {
+    const e = ease(id === "toOven" ? p : 1 - p);
+    cx = lerp(HOME.x, OVEN.x, e); cy = lerp(HOME.y, OVEN.y, e) - Math.abs(Math.sin(t * 9)) * 7; cs = lerp(HOME.s, OVEN.s, e);
+    pose = "peel_carry"; flip = id === "toOven"; carried = id === "toOven" ? "base_sauce_mozzarella" : cookedName;
+  } else if (id === "push" || id === "pull") {
+    cx = OVEN.x; cy = OVEN.y; cs = OVEN.s; pose = "peel_push"; flip = true;
+    const q = id === "push" ? p : 1 - p;
+    const b = BLADE.peel_push, bx = cx - b[0] * cs, by = cy + b[1] * cs, e = ease(clamp01(q * 1.6));
+    pizzaAt(id === "push" ? "base_sauce_mozzarella" : cookedName, lerp(bx, op.x, e), lerp(by, op.y, e), lerp(.36, op.scale, e), { sy: op.squashY });
+  } else if (id === "cook") {
+    cx = OVEN.x + 40; cy = OVEN.y; cs = OVEN.s;
+    pose = burnt ? (p > .8 ? "shocked" : p > .5 ? "wait_worried" : "watch_oven") : "watch_oven";
+    if (pose === "shocked") cx += Math.sin(t * 40) * 3;
+  } else if (id === "result") {
+    if (burnt) pose = p < .55 ? "burnt_pizza" : "sad";
+    else { pose = p < .6 ? "proud_pizza" : "celebrate"; if (p >= .6) cy -= Math.abs(Math.sin((p - .6) / .4 * Math.PI * 2)) * 46; }
+  }
+  if (carried) {
+    const b = BLADE[pose], dir = flip ? -1 : 1;
+    pizzaAt(carried, cx + dir * b[0] * cs, cy + b[1] * cs - 8, .36, { sy: .62 });
+  }
+  chef(pose, cx, cy, cs, { flip, sy });
+  if (carried) {  // la pala passa sopra la mano: ridisegna la pizza davanti
+    const b = BLADE[pose], dir = flip ? -1 : 1;
+    pizzaAt(carried, cx + dir * b[0] * cs, cy + b[1] * cs - 8, .36, { sy: .62 });
+  }
+
+  // bancone e ciotole
+  spr(L.counter, 0, 0, 1, { ax: 0, ay: 0 });
+  const active = { sauce: "bowl_sauce", mozz: "bowl_mozzarella", basil: "bowl_basil" }[id];
+  for (const b of LAY.bowls) spr(`ingredients/${b.sprite}.png`, b.x, b.y, b.scale * (b.sprite === active ? pop(p * 2.2) : 1));
+
+  // pizza sul marmo
+  const pz = LAY.pizza, ps = pz.scale;
+  if (id === "idle") pizzaAt("dough_ball", pz.x, pz.y - 14, .46, { sy: 1 });
+  else if (id === "knead") {
+    if (p < .5) pizzaAt("dough_ball", pz.x, pz.y - 14 + p * 20, .46 * (1 + p * .5), { sy: 1 - p * .9 });
+    else pizzaAt("base_raw", pz.x, pz.y, ps * lerp(.8, 1, ease((p - .5) * 2)));
+    if (p > .42 && p < .9) spr("fx/flour_puff.png", pz.x, pz.y - 40 - (p - .42) * 90, .9 + p * .5, { alpha: 1 - (p - .42) / .48 });
+  } else if (id === "sauce") { pizzaAt("base_raw", pz.x, pz.y, ps); pizzaAt("base_sauce", pz.x, pz.y, ps, { alpha: clamp01((p - .3) * 4) }); }
+  else if (id === "mozz") { pizzaAt("base_sauce", pz.x, pz.y, ps); pizzaAt("base_sauce_mozzarella", pz.x, pz.y, ps, { alpha: clamp01((p - .3) * 4) }); }
+  else if (id === "basil" || (id === "pick" && p <= .45)) {
+    pizzaAt("base_sauce_mozzarella", pz.x, pz.y, ps);
+    const leaves = [[-70, -22, -.4], [62, 18, .5], [-8, 30, .1]];
+    leaves.forEach(([dx, dy, r], n) => {
+      const a = id === "pick" ? 1 : clamp01((p - .2 - n * .2) * 6);
+      if (a > 0) spr("toppings/basil_leaf.png", pz.x + dx, pz.y + dy - (1 - a) * 60, pz.toppingScale, { sy: pz.squashY, rot: r, alpha: a });
+    });
+  }
+
+  // effetti del finale
+  if (id === "cook" && burnt && p > .6) {
+    for (let n = 0; n < 3; n++) {
+      const q = ((t * .5 + n / 3) % 1);
+      spr("fx/smoke_burnt.png", op.x + 20 + Math.sin(q * 6 + n) * 26, mo.y + 40 - q * 190, .5 + q * .5, { alpha: (1 - q) * clamp01((p - .6) * 5) });
+    }
+  }
+  if (id === "result" && !burnt && p < .6) {
+    const hx = cx + 190 * cs, hy = cy - 520 * cs;
+    spr("fx/sparkle_big.png", hx + 120, hy - 30, .5 * pop((t * 1.4) % 1), { rot: t });
+    spr("fx/sparkles.png", hx - 150, hy + 10, .55, { alpha: .6 + .4 * Math.sin(t * 8) });
+  }
+  if (id === "result" && burnt && p < .55) {
+    const q = (t * .6) % 1;
+    spr("fx/smoke_puff.png", cx + 96, cy - 300 - q * 130, .5 + q * .3, { alpha: (1 - q) * .85 });
+  }
+
+  // interfaccia: barra di cottura e stelle
+  if (cooking) {
+    const bx = 960, by = 70, bs = .8, fw = 520 * bs, fh = 180 * bs;
+    const x0 = bx - fw * .40, x1 = bx + fw * .40, y0 = by - fh * .145, hh = fh * .29;
+    spr("ui/bar_frame.png", bx, by, bs);
+    const g = ctx.createLinearGradient(x0, 0, x1, 0);
+    g.addColorStop(0, "#f4d58a"); g.addColorStop(.40, "#f0b94e"); g.addColorStop(.47, "#58b254");
+    g.addColorStop(.64, "#58b254"); g.addColorStop(.72, "#e8792c"); g.addColorStop(.9, "#7a2a16"); g.addColorStop(1, "#2a1712");
+    ctx.save(); ctx.beginPath(); ctx.roundRect(x0, y0, x1 - x0, hh, hh / 2); ctx.clip(); ctx.fillStyle = g; ctx.fillRect(x0, y0, x1 - x0, hh); ctx.restore();
+    const prog = id === "cook" ? (burnt ? p * .97 : p * .56) : id === "push" ? 0 : (burnt ? .97 : .56);
+    spr("ui/bar_marker.png", lerp(x0, x1, prog), y0 - 22, .2);
+  }
+  if (id === "result") {
+    const n = burnt ? 0 : 3;
+    for (let k = 0; k < 3; k++) spr(k < n ? "ui/star_full.png" : "ui/star_empty.png", 960 + (k - 1) * 120, 96, .26 * (k < n ? pop((p * 5 - k * .5)) : 1));
+  }
+  const text = id === "result" ? (burnt ? "Pizza bruciata" : "Pizza perfetta") : label;
+  if (stepEl.dataset.t !== text) { stepEl.dataset.t = text; stepEl.textContent = text; }
+}
+
+function tick(now) {
+  const dt = Math.min(.05, (now - last) / 1000 || 0); last = now;
+  if (playing) advance(dt);
+  draw();
+  document.querySelectorAll("canvas[data-anim]").forEach(c => {
+    const a = M.animations[c.dataset.anim], i = img[a.file]; if (!i) return;
+    const f = Math.floor(clock * a.fps) % a.frames, x = c.getContext("2d");
+    x.clearRect(0, 0, c.width, c.height); x.drawImage(i, f * a.frameW, 0, a.frameW, a.frameH, 0, 0, a.frameW, a.frameH);
+  });
+  const wc = document.getElementById("walk-demo"), wf = M.animations.chef_walk;
+  const wi = img[wf.frames[Math.floor(clock * wf.fps) % wf.frames.length]];
+  if (wc && wi) { const x = wc.getContext("2d"); x.clearRect(0, 0, wc.width, wc.height); x.drawImage(wi, 0, 0); }
+  requestAnimationFrame(tick);
+}
+
+const btnPlay = document.getElementById("btn-play");
+function syncPlay() { btnPlay.textContent = playing ? "Pausa" : "Riprendi"; btnPlay.setAttribute("aria-pressed", String(!playing)); }
+btnPlay.addEventListener("click", () => { playing = !playing; syncPlay(); });
+const ends = { "end-alt": "alt", "end-ok": "ok", "end-burnt": "burnt" };
+for (const idb in ends) document.getElementById(idb).addEventListener("click", () => {
+  mode = ends[idb];
+  for (const o in ends) document.getElementById(o).setAttribute("aria-pressed", String(o === idb));
+  if (mode !== "alt") { burnt = mode === "burnt"; stepIdx = 5; stepT = 0; }
+});
+syncPlay();
+if (reduceMotion) { stepIdx = 4; stepT = 1.0; }
+Promise.all(need.map(load)).then(() => requestAnimationFrame(tick));
+</script>
