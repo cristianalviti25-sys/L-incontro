@@ -21,12 +21,15 @@ pizzaiolo che si muove dietro al bancone, forno a legna con fuoco visibile a sin
 | `chef/` | 21 pose + ciclo di camminata a 8 frame (`walk_1`…`walk_8`). Tutte sulla stessa tela 648×643, alla stessa statura e con ancora ai piedi, quindi si scambiano senza scatti. |
 | `ingredients/` | Vassoio di panetti e 8 ciotole: pomodoro, mozzarella, basilico, funghi, salame piccante, olive, prosciutto cotto, peperoni. |
 | `pizza/` | Panetto, base cruda, con pomodoro, con mozzarella, cotta, troppo cotta, bruciata, margherita finita, pala. Gli stati hanno la stessa dimensione e si sovrappongono esattamente. |
+| `flavors/` | 9 pizze finite, una per gusto: margherita, diavola, funghi, prosciutto, prosciutto e funghi, calabrese, capricciosa, vegetariana, speciale della casa. |
 | `toppings/` | 12 pezzi singoli da spargere sulla pizza. |
 | `fx/` | Fumo, vapore, farina, scintille, cuore, goccia; `fire_strip.png` (8 frame, 10 fps) e `fire_alt_strip.png` (12 frame, 12 fps). |
-| `ui/` | Pannello in legno, biglietto ordine, pulsanti (play, replay, pausa, audio), stelle, cornice e cursore della barra di cottura, timer, mano per il tutorial. Nessun testo. |
+| `ui/` | Pannello in legno, biglietto ordine, pulsanti (play, replay, pausa, audio, cestino), stelle, cuori, esito giusto/sbagliato, campanella, nastro, trofeo, cartone, cornice e cursore della barra di cottura, timer, mano per il tutorial. Nessun testo. |
 | `concept/` | Immagine guida dello stile e scena di prova montata con gli sprite. |
 | `source/` | Fogli originali di Higgsfield a piena risoluzione. |
 | `manifest.json` | Elenco di sprite e animazioni con dimensioni e ancore, più le posizioni consigliate nella scena orizzontale (fuoco, pizzaiolo, pizza, ciotole, pala). |
+
+Il gioco che usa questo kit è in [`game/`](../../game/README.md).
 
 ## Note per lo sviluppo del gioco
 
@@ -74,3 +77,5 @@ Per gli sprite su sfondo trasparente: formato quadrato 1:1 e parametro `backgrou
 | `ui.png` | `2cac376f-c23d-4b52-af48-3387d69b2a56` |
 | `fire_sheet.png` | `5b9e2627-7f8e-4687-9522-7051fd288218` |
 | `fire_loop.gif` | `df0e3cf5-e782-44ed-8a35-a2e99bdf0546` |
+| `pizza_flavors.png` | `63cb9f18-6af9-4c15-8ff1-64829b79c95f` |
+| `ui_extra.png` | `242c967f-85d4-4a16-a51c-abb42e0f6d91` |

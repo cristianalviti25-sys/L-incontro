@@ -1,0 +1,112 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Pizzaiolo per un Giorno</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: il gioco in alto a tutta larghezza, sotto il menu dei gusti come una lavagna di pizzeria e le regole in breve. */
+:root {
+  --bg: #ebe8ee;          /* marmo del piano di lavoro */
+  --surface: #f8f7fa;
+  --ink: #2b2530;
+  --muted: #6a6272;
+  --line: #d3cedb;
+  --basil: #2c7a37;
+  --tomato: #c93a26;
+  --stage-edge: #3b2a22;
+  --font-display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b2123; --surface: #242c2f; --ink: #edefe8; --muted: #9ba6a4; --line: #37433f;
+    --basil: #74c878; --tomato: #ff7a5c; --stage-edge: #0f1314; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b2123; --surface: #242c2f; --ink: #edefe8; --muted: #9ba6a4; --line: #37433f;
+  --basil: #74c878; --tomato: #ff7a5c; --stage-edge: #0f1314; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; }
+.page {
+  max-width: 1120px; margin: 0 auto; padding-block: 24px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 36px;
+}
+h1, h2 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(28px, 5vw, 42px); }
+h2 { font-size: 24px; }
+p { margin: 0; }
+.intro { display: flex; flex-direction: column; gap: 8px; }
+.intro p { max-width: 65ch; color: var(--muted); }
+.game { width: 100%; max-width: 100%; border: 4px solid var(--stage-edge); border-radius: 6px; overflow: hidden; background: var(--stage-edge); }
+.keys { font-size: 13px; color: var(--muted); }
+.keys kbd { font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--line); border-radius: 3px; padding: 1px 5px; background: var(--surface); color: var(--ink); }
+.block { display: flex; flex-direction: column; gap: 14px; }
+.block > p { color: var(--muted); max-width: 65ch; }
+.menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px 22px; }
+.flavor { display: grid; grid-template-columns: 84px 1fr; gap: 12px; align-items: center; padding-block: 8px; border-bottom: 1.5px dashed var(--line); min-width: 0; }
+.flavor img { width: 84px; height: auto; }
+.flavor h3 { font-family: var(--font-display); font-weight: 600; font-size: 18px; margin: 0; line-height: 1.15; }
+.flavor p { font-size: 13.5px; color: var(--muted); line-height: 1.35; }
+.flavor .lvl { font-family: var(--font-mono); font-size: 11.5px; color: var(--tomato); letter-spacing: .03em; }
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px 28px; margin: 0; padding: 0; list-style: none; }
+.rules li { min-width: 0; }
+.rules b { font-family: var(--font-display); font-weight: 600; font-size: 17px; display: block; }
+.rules span { color: var(--muted); font-size: 14.5px; }
+.embed { overflow-x: auto; background: var(--surface); border: 1.5px solid var(--line); border-radius: 4px; padding: 12px 14px; margin: 0;
+         font-family: var(--font-mono); font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<main class="page">
+  <header class="intro">
+    <h1>Pizzaiolo per un Giorno</h1>
+    <p>Leggi l’ordine, tocca gli ingredienti giusti, inforna e sforna quando la freccia è sul verde. Mentre una pizza cuoce puoi già preparare la prossima, ma occhio a non bruciarla.</p>
+  </header>
+
+  <section class="block" aria-label="Gioco">
+    <div class="game" id="gioco"></div>
+    <p class="keys">Da tastiera: <kbd>Spazio</kbd> stende l’impasto, <kbd>1</kbd>–<kbd>8</kbd> gli ingredienti da sinistra a destra, <kbd>Invio</kbd> il forno, <kbd>Canc</kbd> butta la pizza, <kbd>P</kbd> pausa.</p>
+  </section>
+
+  <section class="block">
+    <h2>I gusti</h2>
+    <p>Nove pizze, dalle più semplici alle più cariche. Quelle con più ingredienti arrivano salendo di livello.</p>
+    <div class="menu" id="menu"></div>
+  </section>
+
+  <section class="block">
+    <h2>Come funziona</h2>
+    <ul class="rules">
+      <li><b>Ordini</b><span>Ogni cliente ha una barra di pazienza. Se finisce prima che la pizza entri in forno, l’ordine è perso.</span></li>
+      <li><b>Forno</b><span>La freccia scorre da cruda a bruciata. Sul verde la pizza è perfetta, sul giallo o sull’arancione vale metà.</span></li>
+      <li><b>Tre vite</b><span>Se ne perde una per una pizza bruciata, una pizza sbagliata o un cliente che se ne va.</span></li>
+      <li><b>Livelli</b><span>Ogni tre pizze servite il forno scalda di più, i clienti hanno meno pazienza e arrivano gusti nuovi.</span></li>
+      <li><b>Punti</b><span>100 per la pizza perfetta, più un bonus di velocità. Le pizze perfette di fila aumentano il moltiplicatore.</span></li>
+      <li><b>Cestino</b><span>Ingrediente sbagliato? Butta la pizza e ricomincia: un solo errore dimezza i punti, due la rovinano.</span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2>Per metterlo in un sito</h2>
+    <p>Bastano la cartella del gioco e due righe. Nome della pizzeria e pulsante finale si impostano dagli attributi.</p>
+    <pre class="embed">&lt;div data-pizza-game data-brand="Pizzeria Da Mario"
+     data-cta-label="Ordina ora" data-cta-url="https://…"&gt;&lt;/div&gt;
+&lt;script src="pizza-game.js"&gt;&lt;/script&gt;</pre>
+  </section>
+</main>
+
+<script>/*GAME_JS*/</script>
+<script>
+  window.gioco = PizzaGame.mount("#gioco", { assets: "assets/" });
+  const menu = document.getElementById("menu");
+  for (const f of PizzaGame.flavors) {
+    const d = document.createElement("article"); d.className = "flavor";
+    const names = f.ing.map(i => PizzaGame.ingredients[i].name.toLowerCase()).join(", ");
+    const img = new Image(); img.alt = ""; img.loading = "lazy"; img.width = 576; img.height = 452; img.src = "assets/flavors/" + f.id + ".webp";
+    const body = document.createElement("div");
+    body.innerHTML = `<h3></h3><p></p><span class="lvl">dal livello ${f.level}</span>`;
+    body.querySelector("h3").textContent = f.name; body.querySelector("p").textContent = names.charAt(0).toUpperCase() + names.slice(1);
+    d.append(img, body); menu.append(d);
+  }
+</script>

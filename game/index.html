@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pizzaiolo per un giorno</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #2b1a12; }
+  #gioco { width: 100vw; height: 100vh; height: 100dvh; }
+</style>
+</head>
+<body>
+<div id="gioco"></div>
+<script src="pizza-game.js"></script>
+<script>
+  // Opzioni: brand (nome della pizzeria), cta (pulsante a fine partita), title, flavors.
+  window.gioco = PizzaGame.mount("#gioco", {
+    brand: "",
+    cta: null // es. { label: "Ordina ora", url: "https://..." }
+  });
+</script>
+</body>
+</html>
