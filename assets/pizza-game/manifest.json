@@ -553,6 +553,134 @@
         "file": "ui/hand_pointer.png",
         "w": 420,
         "h": 454
+      },
+      "btn_trash": {
+        "file": "ui/btn_trash.png",
+        "w": 464,
+        "h": 477
+      },
+      "heart_full": {
+        "file": "ui/heart_full.png",
+        "w": 492,
+        "h": 431
+      },
+      "heart_empty": {
+        "file": "ui/heart_empty.png",
+        "w": 498,
+        "h": 436
+      },
+      "badge_ok": {
+        "file": "ui/badge_ok.png",
+        "w": 454,
+        "h": 520
+      },
+      "badge_no": {
+        "file": "ui/badge_no.png",
+        "w": 458,
+        "h": 520
+      },
+      "bell": {
+        "file": "ui/bell.png",
+        "w": 520,
+        "h": 485
+      },
+      "banner_red": {
+        "file": "ui/banner_red.png",
+        "w": 520,
+        "h": 249
+      },
+      "trophy": {
+        "file": "ui/trophy.png",
+        "w": 520,
+        "h": 504
+      },
+      "pizza_box": {
+        "file": "ui/pizza_box.png",
+        "w": 520,
+        "h": 396
+      }
+    },
+    "flavors": {
+      "margherita": {
+        "file": "flavors/margherita.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
+      },
+      "diavola": {
+        "file": "flavors/diavola.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
+      },
+      "funghi": {
+        "file": "flavors/funghi.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
+      },
+      "prosciutto": {
+        "file": "flavors/prosciutto.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
+      },
+      "prosciutto_funghi": {
+        "file": "flavors/prosciutto_funghi.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
+      },
+      "calabrese": {
+        "file": "flavors/calabrese.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
+      },
+      "capricciosa": {
+        "file": "flavors/capricciosa.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
+      },
+      "vegetariana": {
+        "file": "flavors/vegetariana.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
+      },
+      "speciale": {
+        "file": "flavors/speciale.png",
+        "w": 576,
+        "h": 452,
+        "anchor": [
+          288,
+          226
+        ]
       }
     }
   },

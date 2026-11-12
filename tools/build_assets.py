@@ -205,6 +205,27 @@ def build_pizza():
         register("pizza", n, rel, img)
 
 
+# ---------------------------------------------------------------- gusti
+FLAVORS = ["margherita", "diavola", "funghi",
+           "prosciutto", "prosciutto_funghi", "calabrese",
+           "capricciosa", "vegetariana", "speciale"]
+
+
+def build_flavors():
+    """Pizze finite per gusto, tutte sulla stessa tela degli stati della pizza."""
+    crops = cut(load("pizza_flavors.png"), 3, 3, FLAVORS)
+    target_w, p = 560, 8
+    scaled = {n: c.resize((target_w, round(c.height * target_w / c.width)), Image.LANCZOS) for n, c in crops.items()}
+    ch = max(s.height for s in scaled.values()) + 2 * p
+    cw = target_w + 2 * p
+    for n, s in scaled.items():
+        canvas = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
+        canvas.paste(s, (p, (ch - s.height) // 2))
+        rel = f"flavors/{n}.png"
+        canvas.save(out_path(rel), optimize=True)
+        register("flavors", n, rel, canvas, anchor=[cw // 2, ch // 2])
+
+
 # ---------------------------------------------------------------- fuoco
 def key_black(img, lo=10, hi=44):
     """Sfondo nero -> trasparente, mantenendo i contorni scuri della fiamma."""
@@ -358,6 +379,11 @@ def main():
         "panel_wood", "ticket_paper", "btn_play", "btn_replay",
         "btn_pause", "btn_sound", "star_full", "star_empty",
         "bar_frame", "bar_marker", "timer", "hand_pointer"], max_side=520)
+    simple_sheet("ui_extra.png", "ui", 3, 3, [
+        "btn_trash", "heart_full", "heart_empty",
+        "badge_ok", "badge_no", "bell",
+        "banner_red", "trophy", "pizza_box"], max_side=520)
+    build_flavors()
     build_fire()
     with open(out_path("manifest.json"), "w") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
